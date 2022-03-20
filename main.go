@@ -30,7 +30,7 @@ func main() {
 }
 
 func GetLikedVideos(service *youtube.Service) ([]*youtube.Video, error) {
-	var isItStillGoing = true
+	//var isItStillGoing = true
 	var videosList []*youtube.Video
 	youtubeItemPart := []string{"id", "snippet", "topicDetails"}
 
@@ -39,22 +39,24 @@ func GetLikedVideos(service *youtube.Service) ([]*youtube.Video, error) {
 		return nil, err
 	}
 
-	NextPageToken := response.NextPageToken
+	//NextPageToken := response.NextPageToken
 	videosList = append(videosList, response.Items...)
 
-	for isItStillGoing {
-		response, err := service.Videos.List(youtubeItemPart).MaxResults(MaxResults).VideoCategoryId(VideoCategoryId).MyRating(MyRating).PageToken(NextPageToken).Do()
-		if err != nil {
-			return nil, err
-		}
-		videosList = append(videosList, response.Items...)
+	/*
+		for isItStillGoing {
+			response, err := service.Videos.List(youtubeItemPart).MaxResults(MaxResults).VideoCategoryId(VideoCategoryId).MyRating(MyRating).PageToken(NextPageToken).Do()
+			if err != nil {
+				return nil, err
+			}
+			videosList = append(videosList, response.Items...)
 
-		if response.NextPageToken == "" {
-			isItStillGoing = false
-		} else {
-			NextPageToken = response.NextPageToken
+			if response.NextPageToken == "" {
+				isItStillGoing = false
+			} else {
+				NextPageToken = response.NextPageToken
+			}
 		}
-	}
+	*/
 
 	return videosList, nil
 }
